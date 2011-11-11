@@ -1,0 +1,24 @@
+<p>Sign In</p>
+
+<% if @services %>
+    <% unless @services.empty? %>
+        <p><strong>You can sign in to this account using:</strong></p>
+        <div class="services">
+          <% for service in @services %>
+              <div class="service">
+                <%= image_tag "providers/#{service.provider}_32.png", :size => "32x32" %>
+                <div class="provider"><%= service.provider_name %></div>
+                <div class="uid"><%= service.uid %></div>
+                <%= link_to "X", service, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove" %>
+              </div>
+          <% end %>
+          <div class="clear"></div>
+        </div>
+    <% end %>
+    <p><strong>Add another service to sign in with:</strong></p>
+<% else %>
+    <p><strong>Sign in through one of these services:</strong></p>
+<% end %>
+
+<%= render :partial => 'shared/socials' %>
+<div class="clear"></div>

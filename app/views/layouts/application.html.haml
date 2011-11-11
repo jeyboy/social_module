@@ -1,0 +1,25 @@
+!!!
+%html{:dir => "ltr", :xmlns => "http://www.w3.org/1999/xhtml"}
+  %head
+    %title Social
+    %meta{:content => "text/html; charset=utf-8", "http-equiv" => "Content-Type"}
+    %meta{:content => "", :name => "keywords"}/
+    %meta{:content => "", :name => "description"}/
+    = javascript_include_tag :application
+    = stylesheet_link_tag :application
+    = csrf_meta_tag
+  %body
+    .header
+      %p
+      -if !user_signed_in?
+        = link_to "Sign in", new_user_session_path
+        = link_to "Sign up", new_user_registration_path
+      -else
+        = link_to "Exit", destroy_user_session_path, :method => :delete
+
+    .content
+      = yield
+
+    .footer
+      .f-in
+        %p= "© Copyright 2009-#{Time.now.year}"
