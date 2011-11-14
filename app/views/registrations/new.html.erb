@@ -1,9 +1,9 @@
 <h2>Sign up</h2>
 <p>Use one of yours accounts on</p>
 <div id="remote2">
-    <%= render :partial => 'shared/socials' %>
+    <%= render :partial => 'shared/socials_list' %>
 </div>
-<p>or create new account</p>
+<p>or create new site account</p>
 <div id="local2" class="box">
     <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
       <%= devise_error_messages! %>
@@ -22,8 +22,6 @@
 
       <p><%= f.label :password_confirmation %><br />
       <%= f.password_field :password_confirmation %></p>
-
-      <p><%= recaptcha_tags %></p>
 
       <p><%= f.submit "Sign up" %></p>
     <% end %>

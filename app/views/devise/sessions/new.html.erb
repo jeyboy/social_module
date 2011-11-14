@@ -1,13 +1,15 @@
 <h2>Sign in</h2>
 <p>Use one of yours accounts on</p>
 <div id="remote2">
-    <%= render :partial => 'shared/socials' %>
+    <%= render :partial => 'shared/socials_list' %>
 </div>
 <p>or use site account</p>
 <div id="local" class="box">
     <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-      <p><%= f.label :email %><br />
-      <%= f.text_field :email %></p>
+      <%= devise_error_messages! %>
+
+      <p><%= f.label :login %><br />
+      <%= f.text_field :login %></p>
 
       <p><%= f.label :password %><br />
       <%= f.password_field :password %></p>

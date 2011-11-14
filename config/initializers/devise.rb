@@ -59,6 +59,9 @@ Devise.setup do |config|
   # Does not affect registerable.
   # config.paranoid = true
 
+  config.authentication_keys = [ :login ]
+  config.reset_password_keys = [ :login ]
+
   # ==> Configuration for :database_authenticatable
   # For bcrypt, this is the cost for hashing the password and defaults to 10. If
   # using other encryptors, it sets how many times you want the password re-encrypted.

@@ -12,8 +12,8 @@
     .header
       %p
       -if !user_signed_in?
-        = link_to "Sign in", new_user_session_path
-        = link_to "Sign up", new_user_registration_path
+        = link_to "Sign in", services_path#new_user_session_path
+        = link_to "Registration", new_user_registration_path
       -else
         = link_to "Exit", destroy_user_session_path, :method => :delete
 

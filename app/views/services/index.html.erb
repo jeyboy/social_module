@@ -19,6 +19,8 @@
 <% else %>
     <p><strong>Sign in through one of these services:</strong></p>
 <% end %>
-
-<%= render :partial => 'shared/socials' %>
+<%= render :partial => 'shared/socials_list' %>
 <div class="clear"></div>
+<%-if !user_signed_in? %>
+    <p>or use <%= link_to 'site account', new_user_session_path %></p>
+<%-end%>
