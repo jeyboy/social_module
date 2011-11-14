@@ -9,8 +9,15 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+TWITTER_KEY = 'ztZvlKRqng15cOc6tknSA'
+TWITTER_SECRET = 'l2tsiCbw81r4xoKlQtaSgZyx9HMiqZYZum4OTalPXE'
+
+FACEBOOK_KEY = '199230350153731'
+FACEBOOK_SECRET = '848bf091c75cd9b561169fdbe8a04f8a'
+
 module Social
   class Application < Rails::Application
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

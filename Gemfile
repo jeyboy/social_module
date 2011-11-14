@@ -12,9 +12,10 @@ gem 'mongrel', '> 1.beta'
 gem 'sqlite3'
 
 #gem 'ruby-openid'
+gem 'fb_graph'
+gem 'omniauth-facebook'
 gem 'omniauth-openid'
 gem 'omniauth-twitter'
-gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'devise'
 
