@@ -34,6 +34,6 @@ class ServicesController < ApplicationController
   end
 
   def wall
-    @info = current_user.services.where(:provider => params[:service]).first().read
+    @items = current_user.services.where(:provider => params[:service]).first().read
   end
 end

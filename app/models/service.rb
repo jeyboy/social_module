@@ -37,17 +37,19 @@ class Service < ActiveRecord::Base
     begin
       case self.provider
         when 'facebook' then
-          info = facebook.posts
+          info = facebook.posts.collection.to_a
+          #info = info.inject([]) {|ret, elem| ret << {:name => elem['from']['name'], :time => elem['created_time'], :text => elem['message'] || elem['story']}}
         when 'twitter' then
           info = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
-          info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :time => elem['created_at'], :text => elem['text']}}
+          #info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :time => elem['created_at'], :text => elem['text']}}
+          info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :name_link => elem['user']['url'], :photo => elem['user']['profile_image_url'], :time => elem['created_at'], :text => elem['text']}}
         when 'google_oauth2' then
           info = read_google_activities
-          info = info.inject([]) {|ret, elem| ret << {:name => elem['actor']['displayName'], :time => elem['published'], :text => elem['title']}}
+          info = info.inject([]) {|ret, elem| ret << {:name => elem['actor']['displayName'], :name_link => elem['actor']['url'], :photo => elem['actor']['image']['url'] , :time => elem['published'], :text => elem['title'] , :text_link => elem['url']}}
       end
     rescue Exception => e
     end
-    info || []
+    {:provider => self.provider_name, :data => (info || [])}
   end
 
   protected

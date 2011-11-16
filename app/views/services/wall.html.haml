@@ -1,8 +1,1 @@
-
--@info.each do |elem|
-   .elem_container
-      %p
-         =elem[:name]
-         =elem[:time]
-      %p
-         =elem[:text]
+=render :partial => "shared/provider_wall/#{@items[:provider]}", :locals => {:items => @items[:data]}

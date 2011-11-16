@@ -1,0 +1,10 @@
+%table
+  - items.each do |item|
+    %tr{:class => 'message'}
+      %td{:align => 'center'}= item[:created_time]
+      %td{:rowspan => '3'}= item[:type] == 'link' ? link_to(item[:message], item[:link]) : item[:story]
+    %tr
+      %td{:align => 'center'}
+        = image_tag(item[:icon], :size => "64x64")
+    %tr
+      %td{:align => 'center'}= item[:from][:name]
