@@ -11,14 +11,14 @@ gem 'mongrel', '> 1.beta'
 
 gem 'sqlite3'
 
-#gem 'ruby-openid'
 gem 'fb_graph'
 gem 'omniauth-facebook'
 gem 'omniauth-google-oauth2'
-gem 'omniauth-openid'
 gem 'omniauth-twitter'
 gem 'devise'
 
+
+gem 'curb'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -30,19 +30,6 @@ end
 
 gem 'jquery-rails'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
-
 group :test do
-  # Pretty printed test output
   gem 'turn', :require => false
 end

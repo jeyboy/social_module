@@ -9,7 +9,7 @@ class ServicesController < ApplicationController
       flash[:notice] = "Signed in successfully."
       sign_in_and_redirect(:user, service.user)
     elsif current_user
-      current_user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :token => omniauth[:credentials][:token], :secret => omniauth[:credentials][:secret])
+      current_user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials])
       flash[:notice] = "Authentication successful."
       redirect_to services_url
     else

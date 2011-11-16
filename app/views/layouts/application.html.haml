@@ -12,7 +12,7 @@
     .header
       %p
         -for service in @services
-          = link_to image_tag("providers/#{service.provider}_32.png", :size => "32x32"), service_wall_path(service.provider)
+          = link_to image_tag("providers/#{service.provider_name}_32.png", :size => "32x32"), service_wall_path(service.provider)
           -#= link_to "X", service, :confirm => 'Are you sure you want to remove this authentication option?', :method => :delete, :class => "remove"
 
       %p

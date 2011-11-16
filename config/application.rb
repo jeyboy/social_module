@@ -15,8 +15,9 @@ TWITTER_SECRET = 'l2tsiCbw81r4xoKlQtaSgZyx9HMiqZYZum4OTalPXE'
 FACEBOOK_KEY = '199230350153731'
 FACEBOOK_SECRET = '848bf091c75cd9b561169fdbe8a04f8a'
 
-GOOGLE_KEY = '562405786070.apps.googleusercontent.com'
-GOOGLE_SECRET = 'WWEK-JHdfDe1CNXEYub2zP-Y'
+GOOGLE_KEY = '995040225879.apps.googleusercontent.com'
+GOOGLE_SECRET = 'wQFAp9sP4OPmAbU_OOPqz4P-'
+GOOGLE_APP = 'AIzaSyCcpWLrFP_v1AT2N8gMrpHZExvZypBq6NY'
 
 module Social
   class Application < Rails::Application

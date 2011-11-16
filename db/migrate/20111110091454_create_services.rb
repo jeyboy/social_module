@@ -4,8 +4,7 @@ class CreateServices < ActiveRecord::Migration
       t.integer :user_id
       t.string :provider
       t.string :uid
-      t.string :token
-      t.string :secret
+      t.string :credentials
 
       t.timestamps
     end
