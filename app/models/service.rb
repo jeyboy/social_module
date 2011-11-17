@@ -4,12 +4,17 @@ class Service < ActiveRecord::Base
   attr_accessible :provider, :uid, :credentials
 
   validates :user, :provider, :uid, :credentials, :presence => true
+  #validates :provider, :inclusion => { :in => self.providers_list.map&:service_name }
+
+  def self.providers_list
+    [{:image_name => 'google', :service_name => 'google_oauth2'}, {:image_name => 'twitter', :service_name => 'twitter'}, {:image_name => 'facebook', :service_name => 'facebook'}]
+  end
 
   def provider_name
     if provider == 'google_oauth2'
       "google"
     else
-      provider#.titleize
+      provider
     end
   end
 
