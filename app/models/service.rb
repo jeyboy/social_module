@@ -3,6 +3,8 @@ class Service < ActiveRecord::Base
   serialize :credentials
   attr_accessible :provider, :uid, :credentials
 
+  validates :user, :provider, :uid, :credentials, :presence => true
+
   def provider_name
     if provider == 'google_oauth2'
       "google"
