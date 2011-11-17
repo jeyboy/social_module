@@ -16,19 +16,20 @@ require 'spec_helper'
 
   describe User do
     before(:each) do
-      @user = Factory.build (:user)
+      @user = Factory.create (:user)
     end
     it "should respond to services" do
       @user.should respond_to(:services)
     end
-    it "should not be uniq" do
-    duplicate = User.new(:login => @user.login)
-    assert_not_equal(assert_equal(@user.login, duplicate.login),false)
+    it "should be valid" do
+      @user.should be_valid
     end
-    it "should be uniq" do
-    duplicate = User.new(:login => @user.login+'a')
-    assert_equal(assert_not_equal(@user.login, duplicate.login),true)
+    it "must have a login and fullname" do
+      user = User.create
+      user.errors[:login].should_not be_empty
+      user.errors[:fullname].should_not be_empty
     end
+    it { should validate_uniqueness_of(:login) }
   end
 
 
