@@ -9,9 +9,7 @@ require "rspec/rails/extra/routing"
 require "rspec-expectations"
 require "rspec"
 require "rspec-rails"
-
 require 'shoulda'
-
 require "rspec/rails/extra/routing"
 require "rspec-expectations"
 require "rspec"
@@ -29,8 +27,6 @@ end
 
 
 RSpec.configure do |config|
-
-
   config.mock_with :rspec
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
@@ -51,6 +47,5 @@ RSpec.configure do |config|
   config.after(:each) do
     DatabaseCleaner.clean
   end
-
 end
 

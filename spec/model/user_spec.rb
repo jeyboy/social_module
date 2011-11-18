@@ -1,9 +1,11 @@
 require 'spec_helper'
 
   describe User do
+
     before :each do
       @user = User.new
     end
+
     it "should have valid factory" do
       assert_nil @user.login
       @user.login = "Chuck"
@@ -16,7 +18,7 @@ require 'spec_helper'
 
   describe User do
     before(:each) do
-      @user = Factory.create (:user)
+      @user = Factory.create(:user)
     end
     it "should respond to services" do
       @user.should respond_to(:services)
@@ -25,9 +27,8 @@ require 'spec_helper'
       @user.should be_valid
     end
     it "must have a login and fullname" do
-      user = User.create
-      user.errors[:login].should_not be_empty
-      user.errors[:fullname].should_not be_empty
+      @user[:login].should_not be_empty
+      @user[:fullname].should_not be_empty
     end
     it { should validate_uniqueness_of(:login) }
   end
