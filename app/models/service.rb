@@ -14,6 +14,7 @@ class Service < ActiveRecord::Base
     !new_record?
   end
 
+
   def provider_name
     if provider == 'google_oauth2'
       "google"
@@ -49,8 +50,15 @@ class Service < ActiveRecord::Base
       case self.provider
         when 'facebook' then
           info = facebook.posts.collection.to_a
+<<<<<<< HEAD
         when 'twitter' then
           info = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
+=======
+          #info = info.inject([]) {|ret, elem| ret << {:name => elem['from']['name'], :time => elem['created_time'], :text => elem['message'] || elem['story']}}
+        when 'twitter' then
+          info = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
+          #info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :time => elem['created_at'], :text => elem['text']}}
+>>>>>>> master
           info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :name_link => elem['user']['url'], :photo => elem['user']['profile_image_url'], :time => elem['created_at'], :text => elem['text']}}
         when 'google_oauth2' then
           info = read_google_activities
