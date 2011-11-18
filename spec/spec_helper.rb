@@ -5,6 +5,10 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'database_cleaner'
+require "rspec/rails/extra/routing"
+require "rspec-expectations"
+require "rspec"
+require "rspec-rails"
 
 require 'shoulda'
 
