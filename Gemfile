@@ -31,5 +31,6 @@ group :test do
   gem "capybara"
   gem 'minitest'
   gem "database_cleaner"
+  gem "shoulda"
   gem 'rspec-rails-extra-routing'
 end
