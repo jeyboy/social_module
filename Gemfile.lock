@@ -168,6 +168,8 @@ GEM
       activesupport (~> 3.0)
       railties (~> 3.0)
       rspec (~> 2.7.0)
+    rspec-rails-extra-routing (0.1.0)
+      rspec-rails (>= 2.5.0)
     rubyzip (0.9.4)
     sass (3.1.10)
     sass-rails (3.1.4)
@@ -223,6 +225,7 @@ DEPENDENCIES
   omniauth-twitter
   rails (= 3.1.1)
   rspec-rails
+  rspec-rails-extra-routing
   sass-rails (~> 3.1.4)
   sqlite3
   therubyracer
