@@ -19,25 +19,8 @@ class ServicesController < ApplicationController
         user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials])
         sign_in_and_redirect(:user, user)
       else
-        def_pass = '0000'
-        user = User.new({:fullname => (omniauth['info']['name'] || ""), :email => mail, :password => def_pass, :password_confirmation => def_pass})
-        user.save(:validate => false)
-        user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials])
-        sign_in(:user, user)
-        redirect_to edit_user_registration_path, :notice => "Pasword by default equal #{def_pass}"
+        redirect_to new_user_registration_path(:fullname => (omniauth['info']['name'] || ''), :email => mail, :provider => {:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials]})
       end
-
-
-
-      #user = User.new
-      #user.apply_omniauth(omniauth)
-      #if user.save
-      #  flash[:notice] = "Signed in successfully."
-      #  sign_in_and_redirect(:user, user)
-      #else
-      #  session[:omniauth] = omniauth.except('extra')
-      #  redirect_to new_user_registration_url
-      #end
     end
   end
 

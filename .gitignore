@@ -5,3 +5,4 @@ tmp/
 .sass-cache/
 .idea
 db/database.yml
+db/social_development

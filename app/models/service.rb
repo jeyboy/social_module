@@ -1,13 +1,17 @@
 class Service < ActiveRecord::Base
+  PROVIDER_LIST = [{:image_name => 'google', :service_name => 'google_oauth2'}, {:image_name => 'twitter', :service_name => 'twitter'}, {:image_name => 'facebook', :service_name => 'facebook'}]
+  inclusion_list = ['google_oauth2', 'twitter', 'facebook']
+
   belongs_to :user
   serialize :credentials
   attr_accessible :provider, :uid, :credentials
 
-  validates :user, :provider, :uid, :credentials, :presence => true
-  #validates :provider, :inclusion => { :in => self.providers_list.map&:service_name }
+  validates :provider, :uid, :credentials, :presence => true
+  validates :provider, :inclusion => { :in => inclusion_list }
+  validates :user_id, :presence => true, :if => :is_not_new_record?
 
-  def self.providers_list
-    [{:image_name => 'google', :service_name => 'google_oauth2'}, {:image_name => 'twitter', :service_name => 'twitter'}, {:image_name => 'facebook', :service_name => 'facebook'}]
+  def is_not_new_record?
+    !new_record?
   end
 
   def provider_name
@@ -45,10 +49,8 @@ class Service < ActiveRecord::Base
       case self.provider
         when 'facebook' then
           info = facebook.posts.collection.to_a
-          #info = info.inject([]) {|ret, elem| ret << {:name => elem['from']['name'], :time => elem['created_time'], :text => elem['message'] || elem['story']}}
         when 'twitter' then
           info = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
-          #info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :time => elem['created_at'], :text => elem['text']}}
           info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :name_link => elem['user']['url'], :photo => elem['user']['profile_image_url'], :time => elem['created_at'], :text => elem['text']}}
         when 'google_oauth2' then
           info = read_google_activities
@@ -65,7 +67,7 @@ class Service < ActiveRecord::Base
     consumer = OAuth::Consumer.new(TWITTER_KEY, TWITTER_SECRET, {:site => "http://api.twitter.com"})
     # now create the access token object from passed values
     token_hash = {:oauth_token => credentials['token'], :oauth_token_secret => credentials['secret']}
-    access_token = OAuth::AccessToken.from_hash(consumer, token_hash)
+    OAuth::AccessToken.from_hash(consumer, token_hash)
   end
 
   def read_google_activities
