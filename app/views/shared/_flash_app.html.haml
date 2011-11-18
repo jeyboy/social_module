@@ -1,0 +1,4 @@
+- flash.each do |key, value|
+  - if key != :service_info
+    .alert-message.fade.in{:class => "#{key}", "data-alert" => "alert"}
+      %p= value

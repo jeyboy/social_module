@@ -1,28 +1,26 @@
 class ServicesController < ApplicationController
-  protect_from_forgery :except => [:create]  #OpenID request broke devise session
+  #protect_from_forgery :except => [:create]  #OpenID request broke devise session
   before_filter :authenticate_user!, :only => [:destroy, :wall]
 
   def create
     omniauth = request.env["omniauth.auth"]
     service = Service.find_by_provider_and_uid(omniauth['provider'], omniauth['uid'])
     if service
-      flash[:notice] = "Signed in successfully."
-      sign_in_and_redirect(:user, service.user)
+      sign_in_and_redirect(:user, service.user, :notice => "Signed in successfully.")
     elsif current_user
       current_user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials])
-      flash[:notice] = "Authentication successful."
-      redirect_to services_url
+      redirect_to services_url, :notice => "Authentication successful."
     else
-      redirect_to :root, :notice => "Authorize"
-      #user = User.new
-      #user.apply_omniauth(omniauth)
-      #if user.save
-      #  flash[:notice] = "Signed in successfully."
-      #  sign_in_and_redirect(:user, user)
-      #else
-      #  session[:omniauth] = omniauth.except('extra')
-      #  redirect_to new_user_registration_url
-      #end
+      mail = omniauth['info']['email'] || ""
+
+      user = User.find_by_email(mail)
+      if user
+        #user.valid_fullname?(name)
+        user.services.create!(:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials])
+        sign_in_and_redirect(:user, user)
+      else
+        redirect_to new_user_registration_path(:fullname => (omniauth['info']['name'] || ''), :email => mail, :provider => {:provider => omniauth['provider'], :uid => omniauth['uid'], :credentials => omniauth[:credentials]})
+      end
     end
   end
 

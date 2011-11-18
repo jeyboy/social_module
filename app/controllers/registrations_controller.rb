@@ -9,16 +9,14 @@ class RegistrationsController < Devise::RegistrationsController
 
   def create
     super
-    #session[:omniauth] = nil unless @user.new_record?
   end
 
   private
 
   def build_resource(*args)
     super
-    #if session[:omniauth]
-    #  @user.apply_omniauth(session[:omniauth])
-    #  @user.valid?
-    #end
+    @user.fullname = params[:fullname] if params[:fullname]
+    @user.email = params[:email] if params[:email]
+    @user.services.build(params[:provider]) if params[:provider]
   end
 end
