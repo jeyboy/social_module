@@ -17,6 +17,13 @@
     %p
       = f.label :password_confirmation
       = f.password_field :password_confirmation
+
+      - if resource.services.first
+        = f.fields_for :services, :as => resource.services.first do |ff|
+          = ff.hidden_field :provider
+          = ff.hidden_field :uid
+          = ff.hidden_field :credentials
+
     %p= f.submit "Sign up"
 #devise_links
   =render :partial => "devise/shared/links"

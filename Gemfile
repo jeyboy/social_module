@@ -3,7 +3,7 @@ source 'http://rubygems.org'
 gem 'rails', '3.1.1'
 gem 'therubyracer'
 gem 'haml-rails'
-gem 'mongrel', '> 1.beta'
+#gem 'mongrel', '> 1.beta'
 gem 'sqlite3'
 
 gem 'fb_graph'
@@ -31,5 +31,9 @@ group :test do
   gem "capybara"
   gem 'minitest'
   gem "database_cleaner"
+
   gem "shoulda"
+
+  gem 'rspec-rails-extra-routing'
+
 end

@@ -9,6 +9,7 @@
     = stylesheet_link_tag :application
     = csrf_meta_tag
   %body
+    =render :partial=>'shared/flash_app'
     .header
       %p
         -for service in @services
@@ -20,7 +21,7 @@
         = link_to "Registration", new_user_registration_path
         = link_to "Authorization", new_user_session_path
       -else
-        = link_to "Socials sign in", services_path#new_user_session_path
+        = link_to "Socials", services_path#new_user_session_path
         = link_to "Exit", destroy_user_session_path, :method => :delete
 
     .content

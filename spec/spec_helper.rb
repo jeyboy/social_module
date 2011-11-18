@@ -5,7 +5,13 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'database_cleaner'
+
 require 'shoulda'
+
+require "rspec/rails/extra/routing"
+require "rspec-expectations"
+require "rspec"
+require "rspec-rails"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -15,6 +21,8 @@ def teardown
   DatabaseCleaner.strategy = :truncation
   DatabaseCleaner.clean
 end
+
+
 
 RSpec.configure do |config|
 

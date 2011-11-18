@@ -26,6 +26,7 @@ Manual Setup:
 
  Install the Required Gems:
     Console:
+     - sudo apt-get install libcurl3 libcurl3-gnutls libcurl4-openssl-dev
      - rvm gemset create "social_module"
      - rvm use ruby@social_module
      - gem install bundler
