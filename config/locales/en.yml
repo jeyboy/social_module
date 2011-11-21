@@ -7,3 +7,6 @@ en:
     attributes:
       user:
         login: "Login"
+  devise:
+    failure:
+      invalid: 'Invalid login or password.'

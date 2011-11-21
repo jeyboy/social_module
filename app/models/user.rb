@@ -9,4 +9,11 @@ class User < ActiveRecord::Base
 
   validates :login, :presence => true, :uniqueness => true
   validates :fullname, :presence => true
+  validates :password, :presence => true, :confirmation => true, :length => {:minimum => 6}, :if => :password_require?
+
+
+  protected
+  def password_require?
+    new_record? || !password.nil? || !password_confirmation.nil?
+  end
 end
