@@ -1,4 +1,4 @@
-OmniAuth.config.full_host = 'http://localhost:9999'
+#OmniAuth.config.full_host = 'http://localhost:9999'
 Rails.application.config.middleware.use OmniAuth::Builder do
    # ALWAYS RESTART YOUR SERVER IF YOU MAKE CHANGES TO THESE SETTINGS!
 

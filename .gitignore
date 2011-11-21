@@ -6,3 +6,4 @@ tmp/
 .idea
 db/database.yml
 db/social_development
+db/social_test
