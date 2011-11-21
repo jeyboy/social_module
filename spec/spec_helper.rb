@@ -6,15 +6,10 @@ require 'rspec/rails'
 require 'rspec/autorun'
 require 'capybara/rspec'
 require 'database_cleaner'
-require "rspec/rails/extra/routing"
 require "rspec-expectations"
-require "rspec"
-require "rspec-rails"
 require 'shoulda'
-require "rspec/rails/extra/routing"
-require "rspec-expectations"
 require "rspec"
-require "rspec-rails"
+#require "rspec-rails"
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
