@@ -1,5 +1,18 @@
 class Service < ActiveRecord::Base
-  PROVIDER_LIST = [{:image_name => 'google', :service_name => 'google_oauth2'}, {:image_name => 'twitter', :service_name => 'twitter'}, {:image_name => 'facebook', :service_name => 'facebook'}]
+  PROVIDER_LIST = [
+      {
+          :image_name => 'google',
+          :service_name => 'google_oauth2'
+      },
+      {
+          :image_name => 'twitter',
+          :service_name => 'twitter'
+      },
+      {
+          :image_name => 'facebook',
+          :service_name => 'facebook'
+      }]
+
   inclusion_list = ['google_oauth2', 'twitter', 'facebook']
 
   belongs_to :user
@@ -15,11 +28,7 @@ class Service < ActiveRecord::Base
   end
 
   def provider_name
-    if provider == 'google_oauth2'
-      "google"
-    else
-      provider
-    end
+    provider == 'google_oauth2' ? "google" : provider
   end
 
   def facebook
@@ -32,15 +41,14 @@ class Service < ActiveRecord::Base
 
   def read
     begin
-      case self.provider
+      info = case self.provider
         when 'facebook' then
-          info = facebook.posts.collection.to_a
+          facebook.posts.collection.to_a
         when 'twitter' then
-          info = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
-          info = JSON::parse(info).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :name_link => elem['user']['url'], :photo => elem['user']['profile_image_url'], :time => elem['created_at'], :text => elem['text']}}
+          twit = twitter.request(:get, "http://api.twitter.com/1/statuses/home_timeline.json").body
+          JSON::parse(twit).inject([]) {|ret, elem| ret << {:name => elem['user']['name'], :name_link => elem['user']['url'], :photo => elem['user']['profile_image_url'], :time => elem['created_at'], :text => elem['text']}}
         when 'google_oauth2' then
-          info = read_google_activities
-          info = info.inject([]) {|ret, elem| ret << {:name => elem['actor']['displayName'], :name_link => elem['actor']['url'], :photo => elem['actor']['image']['url'] , :time => elem['published'], :text => elem['title'] , :text_link => elem['url']}}
+          read_google_activities.inject([]) {|ret, elem| ret << {:name => elem['actor']['displayName'], :name_link => elem['actor']['url'], :photo => elem['actor']['image']['url'] , :time => elem['published'], :text => elem['title'] , :text_link => elem['url']}}
       end
     rescue Exception => e
     end

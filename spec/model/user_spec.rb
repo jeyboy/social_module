@@ -17,7 +17,6 @@ require 'spec_helper'
   describe User do
     before(:each) do
       @user = Factory.create(:user)
-      puts @user.email
     end
     it "should respond to services" do
       should have_many(:services).dependent(:destroy)
