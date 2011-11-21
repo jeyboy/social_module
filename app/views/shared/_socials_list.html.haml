@@ -1,6 +1,6 @@
 #services
   -active_services = @services.inject([]) {|ret, elem| ret << elem.provider }
-  -Service::PROVIDER_LIST.each do |provider|
+  -SharedHelper::PROVIDER_LIST.each do |provider|
     - unless active_services.include?(provider[:service_name])
       =link_to image_tag("providers/#{provider[:image_name]}_64.png", :size => "64x64",  :alt => "#{provider[:image_name].capitalize}"), "/auth/#{provider[:service_name]}"
 

@@ -6,21 +6,19 @@ class ServicesController < ApplicationController
     if service = Service.find_by_provider_and_uid(omniauth[:provider], omniauth[:uid])
       sign_in_and_redirect(:user, service.user, :notice => "Signed in successfully.")
     elsif current_user
-      current_user.services.create!(:provider => omniauth[:provider], :uid => omniauth[:uid], :credentials => omniauth[:credentials])
+      current_user.services.create(:provider => omniauth[:provider], :uid => omniauth[:uid], :credentials => omniauth[:credentials])
       redirect_to services_url, :notice => "Authentication successful."
     else
       mail = omniauth[:info][:email]
 
       if user = User.find_by_email(mail)
-        user.services.create!(:provider => omniauth[:provider], :uid => omniauth[:uid], :credentials => omniauth[:credentials])
+        user.services.create(:provider => omniauth[:provider], :uid => omniauth[:uid], :credentials => omniauth[:credentials])
         sign_in_and_redirect(:user, user)
       else
         redirect_to new_user_registration_path(
                         :fullname => (omniauth[:info][:name].to_s),
                         :email => mail,
-                        :provider => {
-                            :provider => omniauth[:provider],
-                            :uid => omniauth[:uid],
+                        :provider => {:provider => omniauth[:provider], :uid => omniauth[:uid],
                             :credentials => omniauth[:credentials]
                         })
       end
@@ -34,5 +32,9 @@ class ServicesController < ApplicationController
 
   def wall
     @items = current_user.services.where(:provider => params[:service]).first().try(:read)
+  end
+
+  def failure
+    redirect_to :root
   end
 end

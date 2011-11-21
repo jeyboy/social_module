@@ -1,18 +1,4 @@
 class Service < ActiveRecord::Base
-  PROVIDER_LIST = [
-      {
-          :image_name => 'google',
-          :service_name => 'google_oauth2'
-      },
-      {
-          :image_name => 'twitter',
-          :service_name => 'twitter'
-      },
-      {
-          :image_name => 'facebook',
-          :service_name => 'facebook'
-      }]
-
   inclusion_list = ['google_oauth2', 'twitter', 'facebook']
 
   belongs_to :user
@@ -72,7 +58,7 @@ class Service < ActiveRecord::Base
 
   def check_and_update_token
     if credentials['expires']
-      if Time.at(credentials['expires_at']) < Time.now
+      if Time.at(credentials['expires_at'].to_i) < Time.now
         c = Curl::Easy.http_post("https://accounts.google.com/o/oauth2/token", Curl::PostField.content('client_id', GOOGLE_KEY), Curl::PostField.content('client_secret', GOOGLE_SECRET), Curl::PostField.content('refresh_token', credentials['refresh_token']), Curl::PostField.content('grant_type', 'refresh_token'))
         c.perform
         data = JSON.parse(c.body_str)
