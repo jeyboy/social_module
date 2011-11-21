@@ -30,20 +30,6 @@ class Service < ActiveRecord::Base
     @tw_user ||= prepare_access_token
   end
 
-  def write(text, feed_name)
-    begin
-      case self.provider
-        when 'facebook' then
-          facebook.feed!(:message => text, :name => feed_name)
-        when 'twitter' then
-          twitter.request(:post, "http://api.twitter.com/1/statuses/update.json", :status => text)
-        when 'google_oauth2' then
-          write_google_activity(text)
-      end
-    rescue Exception => e
-    end
-  end
-
   def read
     begin
       case self.provider
@@ -85,9 +71,5 @@ class Service < ActiveRecord::Base
         self.update_attribute(:credentials, credentials.to_hash.update({'token' => data['access_token'], 'expires_at' => (Time.now.to_i + data['expired_in'].to_i)}))
       end
     end
-  end
-
-  def write_google_activity(text)
-
   end
 end

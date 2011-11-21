@@ -7,8 +7,9 @@ class User < ActiveRecord::Base
 
   attr_accessible :login, :fullname, :email, :password, :password_confirmation, :remember_me, :services_attributes
 
-  validates :login, :presence => true, :uniqueness => true
+  validates :login, :presence => true, :uniqueness => true, :length => {:minimum => 6, :maximum => 20}
   validates :fullname, :presence => true
+  validates :email, :presence => true, :uniqueness => true
   validates :password, :presence => true, :confirmation => true, :length => {:minimum => 6}, :if => :password_require?
 
 
