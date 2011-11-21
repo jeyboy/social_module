@@ -9,7 +9,7 @@ class User < ActiveRecord::Base
 
   validates :login, :presence => true, :uniqueness => true, :length => {:minimum => 6, :maximum => 20}
   validates :fullname, :presence => true
-  validates :email, :presence => true, :uniqueness => true
+  validates :email, :presence => true, :uniqueness => true, :format => {:with => Devise.email_regexp}
   validates :password, :presence => true, :confirmation => true, :length => {:minimum => 6}, :if => :password_require?
 
 
