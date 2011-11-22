@@ -9,6 +9,8 @@ class Service < ActiveRecord::Base
   validates :provider, :inclusion => { :in => inclusion_list }
   validates :user_id, :presence => true, :if => :is_not_new_record?
 
+  scope :for_provider, lambda {|service| find_by_provider(service)}
+
   def is_not_new_record?
     !new_record?
   end

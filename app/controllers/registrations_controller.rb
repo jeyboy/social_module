@@ -8,7 +8,9 @@ class RegistrationsController < Devise::RegistrationsController
         params[:user][:services_attributes]['0'][:credentials] = nil
       end
     end
+
     super
+
     @user.fullname = params[:fullname] if params[:fullname]
     @user.email = params[:email] if params[:email]
 

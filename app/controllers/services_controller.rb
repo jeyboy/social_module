@@ -26,12 +26,19 @@ class ServicesController < ApplicationController
   end
 
   def destroy
-    current_user.services.find_by_id(params[:id]).try(:destroy)
-    redirect_to services_url, :notice => "Successfully destroyed authentication."
+    if user = current_user.services.find_by_id(params[:id])
+      user.destroy
+      mess = "Successfully destroyed authentication."
+    else
+      mess = "Destroying of the authentication is failed."
+    end
+
+    redirect_to services_url, :notice => mess
   end
 
   def wall
-    @items = current_user.services.where(:provider => params[:service]).first().try(:read)
+    obj = current_user.services.for_provider(params[:service])
+    @items = obj.respond_to?(:read) ? obj.read : []
   end
 
   def failure
