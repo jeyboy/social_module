@@ -11,9 +11,12 @@ class RegistrationsController < Devise::RegistrationsController
     super
     @user.fullname = params[:fullname] if params[:fullname]
     @user.email = params[:email] if params[:email]
+
     if params[:provider]
-      params[:provider][:credentials] = params[:provider][:credentials].to_xml
+      params[:provider][:credentials] = params[:provider][:credentials]
       @user.services.build(params[:provider])
     end
+
+    @user.services.first.credentials = @user.services.first.credentials.to_xml if @user.services.first and !@user.valid?
   end
 end
