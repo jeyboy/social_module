@@ -37,7 +37,7 @@ class ServicesController < ApplicationController
   end
 
   def wall
-    obj = current_user.services.for_provider(params[:service])
+    obj = current_user.services.for_provider(params[:service]).first
     @items = obj.respond_to?(:read) ? obj.read : []
   end
 
