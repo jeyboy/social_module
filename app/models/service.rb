@@ -11,6 +11,15 @@ class Service < ActiveRecord::Base
 
   scope :for_provider, lambda {|service| where(:provider => service)}
 
+  before_save :check_credentials
+
+  def check_credentials
+    if self.credentials.is_a?(String)
+      hash = Hash.from_xml(self.credentials)['hash']
+      self.credentials = hash if hash
+    end
+  end
+
   def is_not_new_record?
     !new_record?
   end
