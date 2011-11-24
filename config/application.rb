@@ -7,17 +7,8 @@ if defined?(Bundler)
   Bundler.require(*Rails.groups(:assets => %w(development test)))
   # If you want your assets lazily compiled in production, use this line
   # Bundler.require(:default, :assets, Rails.env)
+
 end
-
-TWITTER_KEY = 'ztZvlKRqng15cOc6tknSA'
-TWITTER_SECRET = 'l2tsiCbw81r4xoKlQtaSgZyx9HMiqZYZum4OTalPXE'
-
-FACEBOOK_KEY = '199230350153731'
-FACEBOOK_SECRET = '848bf091c75cd9b561169fdbe8a04f8a'
-
-GOOGLE_KEY = '995040225879.apps.googleusercontent.com'
-GOOGLE_SECRET = 'wQFAp9sP4OPmAbU_OOPqz4P-'
-GOOGLE_APP = 'AIzaSyCcpWLrFP_v1AT2N8gMrpHZExvZypBq6NY'
 
 module Social
   class Application < Rails::Application
@@ -35,7 +26,6 @@ module Social
 
     # Activate observers that should always be running.
     # config.active_record.observers = :cacher, :garbage_collector, :forum_observer
-
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
     # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     # config.time_zone = 'Central Time (US & Canada)'
@@ -55,5 +45,7 @@ module Social
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
   end
 end
+CONFIG = YAML::load_file("#{Rails.root}/config/provid.yml")

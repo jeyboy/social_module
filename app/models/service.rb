@@ -55,14 +55,14 @@ class Service < ActiveRecord::Base
   protected
 
   def prepare_access_token
-    consumer = OAuth::Consumer.new(TWITTER_KEY, TWITTER_SECRET, {:site => "http://api.twitter.com"})
+    consumer = OAuth::Consumer.new(CONFIG['TWITTER_KEY'], CONFIG['TWITTER_SECRET'], {:site => "http://api.twitter.com"})
     token_hash = {:oauth_token => credentials['token'], :oauth_token_secret => credentials['secret']}
     OAuth::AccessToken.from_hash(consumer, token_hash)
   end
 
   def read_google_activities
     check_and_update_token
-    c = Curl::Easy.new("https://www.googleapis.com/plus/v1/people/me/activities/public?alt=json&pp=1&key=#{GOOGLE_APP}&access_token=#{credentials['token']}")
+    c = Curl::Easy.new("https://www.googleapis.com/plus/v1/people/me/activities/public?alt=json&pp=1&key=#{CONFIG['GOOGLE_APP']}&access_token=#{credentials['token']}")
     c.perform
     JSON.parse(c.body_str)['items']
   end
@@ -70,7 +70,7 @@ class Service < ActiveRecord::Base
   def check_and_update_token
     if credentials['expires']
       if Time.at(credentials['expires_at'].to_i) < Time.now
-        c = Curl::Easy.http_post("https://accounts.google.com/o/oauth2/token", Curl::PostField.content('client_id', GOOGLE_KEY), Curl::PostField.content('client_secret', GOOGLE_SECRET), Curl::PostField.content('refresh_token', credentials['refresh_token']), Curl::PostField.content('grant_type', 'refresh_token'))
+        c = Curl::Easy.http_post("https://accounts.google.com/o/oauth2/token", Curl::PostField.content('client_id', CONFIG['GOOGLE_KEY']), Curl::PostField.content('client_secret', CONFIG['GOOGLE_SECRET']), Curl::PostField.content('refresh_token', credentials['refresh_token']), Curl::PostField.content('grant_type', 'refresh_token'))
         c.perform
         data = JSON.parse(c.body_str)
         self.update_attribute(:credentials, credentials.to_hash.update({'token' => data['access_token'], 'expires_at' => (Time.now.to_i + data['expired_in'].to_i)}))
